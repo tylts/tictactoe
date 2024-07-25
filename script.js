@@ -5,23 +5,16 @@ function GameBoard() {
     board.push(Box());
   }
 
-  const getBoard = () => board;
-
   const placeMark = (box, player) => {
     board[box].addMark(player);
   };
 
+  const getBoard = () => board.map((box) => box.getValue());
+
   const printBoard = () => {
-    const boardWithBoxes = board.map((box) => box.getValue());
-    console.log(
-      `${boardWithBoxes[0]} ${boardWithBoxes[1]} ${boardWithBoxes[2]}`
-    );
-    console.log(
-      `${boardWithBoxes[3]} ${boardWithBoxes[4]} ${boardWithBoxes[5]}`
-    );
-    console.log(
-      `${boardWithBoxes[6]} ${boardWithBoxes[7]} ${boardWithBoxes[8]}`
-    );
+    console.log(`${getBoard()[0]} ${getBoard()[1]} ${getBoard()[2]}`);
+    console.log(`${getBoard()[3]} ${getBoard()[4]} ${getBoard()[5]}`);
+    console.log(`${getBoard()[6]} ${getBoard()[7]} ${getBoard()[8]}`);
   };
 
   return {
@@ -50,7 +43,7 @@ function GameController(
   playerOneName = 'Player 1',
   playerTwoName = 'Player 2'
 ) {
-  const board = GameBoard();
+  const fullGameBoard = GameBoard();
 
   const players = [
     { name: playerOneName, mark: 'X' },
@@ -58,7 +51,7 @@ function GameController(
   ];
 
   const printRound = () => {
-    board.printBoard();
+    fullGameBoard.printBoard();
   };
 
   let currentPlayer = players[0];
@@ -70,9 +63,81 @@ function GameController(
   };
 
   const playRound = (box) => {
-    board.placeMark(box, getCurrentPlayer().mark);
-    printRound();
-    changePlayer();
+    if (fullGameBoard.getBoard()[box] === '-') {
+      fullGameBoard.placeMark(box, getCurrentPlayer().mark);
+      printRound();
+      checkWinner();
+      changePlayer();
+    } else {
+      console.log('Choose a different box!');
+      printRound();
+    }
+  };
+
+  const checkWinner = () => {
+    if (
+      fullGameBoard.getBoard()[0] === fullGameBoard.getBoard()[1] &&
+      fullGameBoard.getBoard()[0] === fullGameBoard.getBoard()[2] &&
+      fullGameBoard.getBoard()[0] !== '-' &&
+      fullGameBoard.getBoard()[1] !== '-' &&
+      fullGameBoard.getBoard()[2] !== '-'
+    ) {
+      console.log(`${currentPlayer.name} is the WINNER!`);
+    }
+    if (
+      fullGameBoard.getBoard()[3] === fullGameBoard.getBoard()[4] &&
+      fullGameBoard.getBoard()[3] === fullGameBoard.getBoard()[5] &&
+      fullGameBoard.getBoard()[3] !== '-' &&
+      fullGameBoard.getBoard()[4] !== '-' &&
+      fullGameBoard.getBoard()[5] !== '-'
+    ) {
+      console.log(`${currentPlayer.name} is the WINNER!`);
+    }
+    if (
+      fullGameBoard.getBoard()[6] === fullGameBoard.getBoard()[7] &&
+      fullGameBoard.getBoard()[6] === fullGameBoard.getBoard()[8] &&
+      fullGameBoard.getBoard()[6] !== '-' &&
+      fullGameBoard.getBoard()[7] !== '-' &&
+      fullGameBoard.getBoard()[8] !== '-'
+    ) {
+      console.log(`${currentPlayer.name} is the WINNER!`);
+    }
+    if (
+      fullGameBoard.getBoard()[0] === fullGameBoard.getBoard()[3] &&
+      fullGameBoard.getBoard()[0] === fullGameBoard.getBoard()[6] &&
+      fullGameBoard.getBoard()[0] !== '-' &&
+      fullGameBoard.getBoard()[3] !== '-' &&
+      fullGameBoard.getBoard()[6] !== '-'
+    ) {
+      console.log(`${currentPlayer.name} is the WINNER!`);
+    }
+    if (
+      fullGameBoard.getBoard()[1] === fullGameBoard.getBoard()[4] &&
+      fullGameBoard.getBoard()[1] === fullGameBoard.getBoard()[7] &&
+      fullGameBoard.getBoard()[1] !== '-' &&
+      fullGameBoard.getBoard()[4] !== '-' &&
+      fullGameBoard.getBoard()[7] !== '-'
+    ) {
+      console.log(`${currentPlayer.name} is the WINNER!`);
+    }
+    if (
+      fullGameBoard.getBoard()[2] === fullGameBoard.getBoard()[5] &&
+      fullGameBoard.getBoard()[2] === fullGameBoard.getBoard()[8] &&
+      fullGameBoard.getBoard()[2] !== '-' &&
+      fullGameBoard.getBoard()[5] !== '-' &&
+      fullGameBoard.getBoard()[8] !== '-'
+    ) {
+      console.log(`${currentPlayer.name} is the WINNER!`);
+    }
+    if (
+      fullGameBoard.getBoard()[0] === fullGameBoard.getBoard()[4] &&
+      fullGameBoard.getBoard()[0] === fullGameBoard.getBoard()[8] &&
+      fullGameBoard.getBoard()[0] !== '-' &&
+      fullGameBoard.getBoard()[4] !== '-' &&
+      fullGameBoard.getBoard()[8] !== '-'
+    ) {
+      console.log(`${currentPlayer.name} is the WINNER!`);
+    }
   };
 
   return {
