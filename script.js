@@ -8,12 +8,20 @@ function GameBoard() {
   const getBoard = () => board;
 
   const placeMark = (box, player) => {
-    console.log(box);
+    board[box].addMark(player);
   };
 
   const printBoard = () => {
     const boardWithBoxes = board.map((box) => box.getValue());
-    console.log(boardWithBoxes);
+    console.log(
+      `${boardWithBoxes[0]} ${boardWithBoxes[1]} ${boardWithBoxes[2]}`
+    );
+    console.log(
+      `${boardWithBoxes[3]} ${boardWithBoxes[4]} ${boardWithBoxes[5]}`
+    );
+    console.log(
+      `${boardWithBoxes[6]} ${boardWithBoxes[7]} ${boardWithBoxes[8]}`
+    );
   };
 
   return {
@@ -24,7 +32,7 @@ function GameBoard() {
 }
 
 function Box() {
-  let value = ' ';
+  let value = '-';
 
   const addMark = (mark) => {
     value = mark;
@@ -51,7 +59,6 @@ function GameController(
 
   const printRound = () => {
     board.printBoard();
-    board.placeMark('Tyler');
   };
 
   let currentPlayer = players[0];
@@ -62,10 +69,16 @@ function GameController(
     currentPlayer = currentPlayer === players[0] ? players[1] : players[0];
   };
 
-  console.log(currentPlayer.mark);
+  const playRound = (box) => {
+    board.placeMark(box, getCurrentPlayer().mark);
+    printRound();
+    changePlayer();
+  };
+
   return {
     getCurrentPlayer,
     printRound,
+    playRound,
   };
 }
 
