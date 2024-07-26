@@ -45,6 +45,18 @@ function GameController(
 ) {
   const fullGameBoard = GameBoard();
 
+  // const box0 = document.querySelector('#box0');
+  // const box1 = document.querySelector('#box1');
+  // const box2 = document.querySelector('#box2');
+  // const box3 = document.querySelector('#box3');
+  // const box4 = document.querySelector('#box4');
+  // const box5 = document.querySelector('#box5');
+  // const box6 = document.querySelector('#box6');
+  // const box7 = document.querySelector('#box7');
+  // const box8 = document.querySelector('#box8');
+
+  const domBoxes = document.querySelectorAll('.box');
+
   const players = [
     { name: playerOneName, mark: 'X' },
     { name: playerTwoName, mark: 'O' },
@@ -135,6 +147,15 @@ function GameController(
       fullGameBoard.getBoard()[0] !== '-' &&
       fullGameBoard.getBoard()[4] !== '-' &&
       fullGameBoard.getBoard()[8] !== '-'
+    ) {
+      console.log(`${currentPlayer.name} is the WINNER!`);
+    }
+    if (
+      fullGameBoard.getBoard()[2] === fullGameBoard.getBoard()[4] &&
+      fullGameBoard.getBoard()[2] === fullGameBoard.getBoard()[6] &&
+      fullGameBoard.getBoard()[2] !== '-' &&
+      fullGameBoard.getBoard()[4] !== '-' &&
+      fullGameBoard.getBoard()[6] !== '-'
     ) {
       console.log(`${currentPlayer.name} is the WINNER!`);
     }
