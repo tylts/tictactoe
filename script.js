@@ -1,3 +1,30 @@
+// function i77yujt8r7juygvugktmuhk7ujhlk,iyjhokihjokiuuo8lo0o89[8=[[=[0-p=-09]]]]
+
+function Domifier() {
+  // const box0 = document.querySelector('#box0');
+  // const box1 = document.querySelector('#box1');
+  // const box2 = document.querySelector('#box2');
+  // const box3 = document.querySelector('#box3');
+  // const box4 = document.querySelector('#box4');
+  // const box5 = document.querySelector('#box5');
+  // const box6 = document.querySelector('#box6');
+  // const box7 = document.querySelector('#box7');
+  // const box8 = document.querySelector('#box8');
+
+  const getBoxes = () => document.querySelectorAll('.box');
+
+  const printBoxes = (gameBoard) => {
+    for (let i = 0; i < getBoxes().length; i++) {
+      getBoxes()[i].textContent = gameBoard[i];
+    }
+  };
+
+  return {
+    getBoxes,
+    printBoxes,
+  };
+}
+
 function GameBoard() {
   const board = [];
 
@@ -25,7 +52,7 @@ function GameBoard() {
 }
 
 function Box() {
-  let value = '-';
+  let value = ' ';
 
   const addMark = (mark) => {
     value = mark;
@@ -44,18 +71,7 @@ function GameController(
   playerTwoName = 'Player 2'
 ) {
   const fullGameBoard = GameBoard();
-
-  // const box0 = document.querySelector('#box0');
-  // const box1 = document.querySelector('#box1');
-  // const box2 = document.querySelector('#box2');
-  // const box3 = document.querySelector('#box3');
-  // const box4 = document.querySelector('#box4');
-  // const box5 = document.querySelector('#box5');
-  // const box6 = document.querySelector('#box6');
-  // const box7 = document.querySelector('#box7');
-  // const box8 = document.querySelector('#box8');
-
-  const domBoxes = document.querySelectorAll('.box');
+  const domifier = Domifier();
 
   const players = [
     { name: playerOneName, mark: 'X' },
@@ -74,10 +90,13 @@ function GameController(
     currentPlayer = currentPlayer === players[0] ? players[1] : players[0];
   };
 
+  // domifier.printBoxes(fullGameBoard.getBoard());
+
   const playRound = (box) => {
-    if (fullGameBoard.getBoard()[box] === '-') {
+    if (fullGameBoard.getBoard()[box] === ' ') {
       fullGameBoard.placeMark(box, getCurrentPlayer().mark);
-      printRound();
+      // printRound();
+      domifier.printBoxes(fullGameBoard.getBoard());
       checkWinner();
       changePlayer();
     } else {
@@ -90,76 +109,86 @@ function GameController(
     if (
       fullGameBoard.getBoard()[0] === fullGameBoard.getBoard()[1] &&
       fullGameBoard.getBoard()[0] === fullGameBoard.getBoard()[2] &&
-      fullGameBoard.getBoard()[0] !== '-' &&
-      fullGameBoard.getBoard()[1] !== '-' &&
-      fullGameBoard.getBoard()[2] !== '-'
+      fullGameBoard.getBoard()[0] !== ' ' &&
+      fullGameBoard.getBoard()[1] !== ' ' &&
+      fullGameBoard.getBoard()[2] !== ' '
     ) {
       console.log(`${currentPlayer.name} is the WINNER!`);
     }
     if (
       fullGameBoard.getBoard()[3] === fullGameBoard.getBoard()[4] &&
       fullGameBoard.getBoard()[3] === fullGameBoard.getBoard()[5] &&
-      fullGameBoard.getBoard()[3] !== '-' &&
-      fullGameBoard.getBoard()[4] !== '-' &&
-      fullGameBoard.getBoard()[5] !== '-'
+      fullGameBoard.getBoard()[3] !== ' ' &&
+      fullGameBoard.getBoard()[4] !== ' ' &&
+      fullGameBoard.getBoard()[5] !== ' '
     ) {
       console.log(`${currentPlayer.name} is the WINNER!`);
     }
     if (
       fullGameBoard.getBoard()[6] === fullGameBoard.getBoard()[7] &&
       fullGameBoard.getBoard()[6] === fullGameBoard.getBoard()[8] &&
-      fullGameBoard.getBoard()[6] !== '-' &&
-      fullGameBoard.getBoard()[7] !== '-' &&
-      fullGameBoard.getBoard()[8] !== '-'
+      fullGameBoard.getBoard()[6] !== ' ' &&
+      fullGameBoard.getBoard()[7] !== ' ' &&
+      fullGameBoard.getBoard()[8] !== ' '
     ) {
       console.log(`${currentPlayer.name} is the WINNER!`);
     }
     if (
       fullGameBoard.getBoard()[0] === fullGameBoard.getBoard()[3] &&
       fullGameBoard.getBoard()[0] === fullGameBoard.getBoard()[6] &&
-      fullGameBoard.getBoard()[0] !== '-' &&
-      fullGameBoard.getBoard()[3] !== '-' &&
-      fullGameBoard.getBoard()[6] !== '-'
+      fullGameBoard.getBoard()[0] !== ' ' &&
+      fullGameBoard.getBoard()[3] !== ' ' &&
+      fullGameBoard.getBoard()[6] !== ' '
     ) {
       console.log(`${currentPlayer.name} is the WINNER!`);
     }
     if (
       fullGameBoard.getBoard()[1] === fullGameBoard.getBoard()[4] &&
       fullGameBoard.getBoard()[1] === fullGameBoard.getBoard()[7] &&
-      fullGameBoard.getBoard()[1] !== '-' &&
-      fullGameBoard.getBoard()[4] !== '-' &&
-      fullGameBoard.getBoard()[7] !== '-'
+      fullGameBoard.getBoard()[1] !== ' ' &&
+      fullGameBoard.getBoard()[4] !== ' ' &&
+      fullGameBoard.getBoard()[7] !== ' '
     ) {
       console.log(`${currentPlayer.name} is the WINNER!`);
     }
     if (
       fullGameBoard.getBoard()[2] === fullGameBoard.getBoard()[5] &&
       fullGameBoard.getBoard()[2] === fullGameBoard.getBoard()[8] &&
-      fullGameBoard.getBoard()[2] !== '-' &&
-      fullGameBoard.getBoard()[5] !== '-' &&
-      fullGameBoard.getBoard()[8] !== '-'
+      fullGameBoard.getBoard()[2] !== ' ' &&
+      fullGameBoard.getBoard()[5] !== ' ' &&
+      fullGameBoard.getBoard()[8] !== ' '
     ) {
       console.log(`${currentPlayer.name} is the WINNER!`);
     }
     if (
       fullGameBoard.getBoard()[0] === fullGameBoard.getBoard()[4] &&
       fullGameBoard.getBoard()[0] === fullGameBoard.getBoard()[8] &&
-      fullGameBoard.getBoard()[0] !== '-' &&
-      fullGameBoard.getBoard()[4] !== '-' &&
-      fullGameBoard.getBoard()[8] !== '-'
+      fullGameBoard.getBoard()[0] !== ' ' &&
+      fullGameBoard.getBoard()[4] !== ' ' &&
+      fullGameBoard.getBoard()[8] !== ' '
     ) {
       console.log(`${currentPlayer.name} is the WINNER!`);
     }
     if (
       fullGameBoard.getBoard()[2] === fullGameBoard.getBoard()[4] &&
       fullGameBoard.getBoard()[2] === fullGameBoard.getBoard()[6] &&
-      fullGameBoard.getBoard()[2] !== '-' &&
-      fullGameBoard.getBoard()[4] !== '-' &&
-      fullGameBoard.getBoard()[6] !== '-'
+      fullGameBoard.getBoard()[2] !== ' ' &&
+      fullGameBoard.getBoard()[4] !== ' ' &&
+      fullGameBoard.getBoard()[6] !== ' '
     ) {
       console.log(`${currentPlayer.name} is the WINNER!`);
     }
   };
+
+  domifier.getBoxes().forEach((box) => {
+    box.addEventListener('click', function (e) {
+      const target = e.target;
+      const parent = target.parentNode;
+      const index = [].indexOf.call(parent.children, target);
+
+      playRound(index);
+    });
+  });
 
   return {
     getCurrentPlayer,
