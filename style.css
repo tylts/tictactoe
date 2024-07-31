@@ -2,15 +2,25 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  /* border: 1px solid black; */
 }
 
 body {
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+}
+
+h1 {
+  font-size: 4rem;
+}
+
+.info {
+  text-align: center;
 }
 
 .game-board {
-  margin-top: 100px;
+  margin-top: 1rem;
   width: 400px;
   height: 400px;
   display: flex;
@@ -20,7 +30,7 @@ body {
 .box {
   width: 33.33%;
   height: 33.33%;
-  font-size: 10vw;
+  font-size: 10rem;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -38,4 +48,9 @@ body {
 #box5 {
   border-top: 5px solid black;
   border-bottom: 5px solid black;
+}
+
+#current-player,
+#game-text {
+  margin: 1rem;
 }

@@ -19,9 +19,17 @@ function Domifier() {
     }
   };
 
+  const playerText = document.querySelector('#current-player');
+  const gameText = document.querySelector('#game-text');
+
+  const setPlayerText = (text) => (playerText.textContent = text);
+  const setGameText = (text) => (gameText.textContent = text);
+
   return {
     getBoxes,
     printBoxes,
+    setGameText,
+    setPlayerText,
   };
 }
 
@@ -88,21 +96,39 @@ function GameController(
 
   const changePlayer = () => {
     currentPlayer = currentPlayer === players[0] ? players[1] : players[0];
+    domifier.setPlayerText(
+      `Current player: ${getCurrentPlayer().name} (${getCurrentPlayer().mark})`
+    );
   };
 
-  // domifier.printBoxes(fullGameBoard.getBoard());
+  domifier.setPlayerText(
+    `Current player: ${getCurrentPlayer().name} (${getCurrentPlayer().mark})`
+  );
+
+  domifier.setGameText(`Choose your box!`);
 
   const playRound = (box) => {
     if (fullGameBoard.getBoard()[box] === ' ') {
       fullGameBoard.placeMark(box, getCurrentPlayer().mark);
-      // printRound();
       domifier.printBoxes(fullGameBoard.getBoard());
-      checkWinner();
       changePlayer();
+      checkWinner();
     } else {
       console.log('Choose a different box!');
       printRound();
     }
+  };
+
+  const checkDraw = () => {
+    let isBoardFull = false;
+    fullGameBoard.getBoard().forEach((box) => {
+      if (box !== ' ') {
+        isBoardFull = true;
+      } else {
+        isBoardFull = false;
+      }
+    });
+    return isBoardFull;
   };
 
   const checkWinner = () => {
@@ -113,7 +139,9 @@ function GameController(
       fullGameBoard.getBoard()[1] !== ' ' &&
       fullGameBoard.getBoard()[2] !== ' '
     ) {
-      console.log(`${currentPlayer.name} is the WINNER!`);
+      changePlayer();
+      domifier.setPlayerText(`GAME OVER!`);
+      domifier.setGameText(`${currentPlayer.name} is the WINNER!`);
     }
     if (
       fullGameBoard.getBoard()[3] === fullGameBoard.getBoard()[4] &&
@@ -122,7 +150,9 @@ function GameController(
       fullGameBoard.getBoard()[4] !== ' ' &&
       fullGameBoard.getBoard()[5] !== ' '
     ) {
-      console.log(`${currentPlayer.name} is the WINNER!`);
+      changePlayer();
+      domifier.setPlayerText(`GAME OVER!`);
+      domifier.setGameText(`${currentPlayer.name} is the WINNER!`);
     }
     if (
       fullGameBoard.getBoard()[6] === fullGameBoard.getBoard()[7] &&
@@ -131,7 +161,9 @@ function GameController(
       fullGameBoard.getBoard()[7] !== ' ' &&
       fullGameBoard.getBoard()[8] !== ' '
     ) {
-      console.log(`${currentPlayer.name} is the WINNER!`);
+      changePlayer();
+      domifier.setPlayerText(`GAME OVER!`);
+      domifier.setGameText(`${currentPlayer.name} is the WINNER!`);
     }
     if (
       fullGameBoard.getBoard()[0] === fullGameBoard.getBoard()[3] &&
@@ -140,7 +172,9 @@ function GameController(
       fullGameBoard.getBoard()[3] !== ' ' &&
       fullGameBoard.getBoard()[6] !== ' '
     ) {
-      console.log(`${currentPlayer.name} is the WINNER!`);
+      changePlayer();
+      domifier.setPlayerText(`GAME OVER!`);
+      domifier.setGameText(`${currentPlayer.name} is the WINNER!`);
     }
     if (
       fullGameBoard.getBoard()[1] === fullGameBoard.getBoard()[4] &&
@@ -149,7 +183,9 @@ function GameController(
       fullGameBoard.getBoard()[4] !== ' ' &&
       fullGameBoard.getBoard()[7] !== ' '
     ) {
-      console.log(`${currentPlayer.name} is the WINNER!`);
+      changePlayer();
+      domifier.setPlayerText(`GAME OVER!`);
+      domifier.setGameText(`${currentPlayer.name} is the WINNER!`);
     }
     if (
       fullGameBoard.getBoard()[2] === fullGameBoard.getBoard()[5] &&
@@ -158,7 +194,9 @@ function GameController(
       fullGameBoard.getBoard()[5] !== ' ' &&
       fullGameBoard.getBoard()[8] !== ' '
     ) {
-      console.log(`${currentPlayer.name} is the WINNER!`);
+      changePlayer();
+      domifier.setPlayerText(`GAME OVER!`);
+      domifier.setGameText(`${currentPlayer.name} is the WINNER!`);
     }
     if (
       fullGameBoard.getBoard()[0] === fullGameBoard.getBoard()[4] &&
@@ -167,7 +205,9 @@ function GameController(
       fullGameBoard.getBoard()[4] !== ' ' &&
       fullGameBoard.getBoard()[8] !== ' '
     ) {
-      console.log(`${currentPlayer.name} is the WINNER!`);
+      changePlayer();
+      domifier.setPlayerText(`GAME OVER!`);
+      domifier.setGameText(`${currentPlayer.name} is the WINNER!`);
     }
     if (
       fullGameBoard.getBoard()[2] === fullGameBoard.getBoard()[4] &&
@@ -176,7 +216,24 @@ function GameController(
       fullGameBoard.getBoard()[4] !== ' ' &&
       fullGameBoard.getBoard()[6] !== ' '
     ) {
-      console.log(`${currentPlayer.name} is the WINNER!`);
+      changePlayer();
+      domifier.setPlayerText(`GAME OVER!`);
+      domifier.setGameText(`${currentPlayer.name} is the WINNER!`);
+    }
+    if (
+      fullGameBoard.getBoard()[0] === fullGameBoard.getBoard()[4] &&
+      fullGameBoard.getBoard()[0] === fullGameBoard.getBoard()[8] &&
+      fullGameBoard.getBoard()[0] !== ' ' &&
+      fullGameBoard.getBoard()[4] !== ' ' &&
+      fullGameBoard.getBoard()[8] !== ' '
+    ) {
+      changePlayer();
+      domifier.setPlayerText(`GAME OVER!`);
+      domifier.setGameText(`${currentPlayer.name} is the WINNER!`);
+    }
+    if (checkDraw()) {
+      domifier.setPlayerText(`GAME OVER!`);
+      domifier.setGameText(`DRAW!!!`);
     }
   };
 
