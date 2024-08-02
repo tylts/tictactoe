@@ -14,9 +14,17 @@ body {
 h1 {
   font-size: 4rem;
 }
-
 .info {
   text-align: center;
+}
+
+.start {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 1rem;
+  width: 400px;
+  height: 400px;
 }
 
 .game-board {
@@ -34,6 +42,11 @@ h1 {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.hidden {
+  visibility: hidden;
+  position: absolute;
 }
 
 #box1,
