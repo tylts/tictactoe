@@ -1,3 +1,13 @@
+@font-face {
+  font-family: markerFont;
+  src: url('fonts/NotoSerifJP-VariableFont_wght.ttf');
+}
+
+@font-face {
+  font-family: mainFont;
+  src: url('fonts/Rubik-VariableFont_wght.ttf');
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -6,6 +16,8 @@
 }
 
 body {
+  font-family: mainFont, 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande',
+    'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -28,6 +40,7 @@ h1 {
 }
 
 .game-board {
+  font-family: markerFont, 'Courier New', Courier, monospace;
   margin-top: 1rem;
   width: 400px;
   height: 400px;
@@ -38,7 +51,7 @@ h1 {
 .box {
   width: 33.33%;
   height: 33.33%;
-  font-size: 10rem;
+  font-size: 6rem;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -49,21 +62,54 @@ h1 {
   position: absolute;
 }
 
+.player-one-name,
+.player-two-name,
+#start-btn {
+  width: 65%;
+}
+
+.p-name {
+  margin: 4px 0;
+  padding: 0.5rem;
+  border: 1px solid black;
+  border-radius: 10px;
+  width: 100%;
+}
+
+.dimmed {
+  color: rgb(211, 211, 211);
+}
+
+input {
+  text-align: center;
+  font-size: 1.2rem;
+}
+
+#start-btn {
+  font-size: 1.2rem;
+
+  padding: 0.5rem;
+  margin: 4px;
+  background-color: white;
+  border: 1px solid black;
+  border-radius: 10px;
+}
+
 #box1,
 #box4,
 #box7 {
-  border-left: 5px solid black;
-  border-right: 5px solid black;
+  border-left: 3px solid black;
+  border-right: 3px solid black;
 }
 
 #box3,
 #box4,
 #box5 {
-  border-top: 5px solid black;
-  border-bottom: 5px solid black;
+  border-top: 3px solid black;
+  border-bottom: 3px solid black;
 }
 
 #current-player,
 #game-text {
-  margin: 1rem;
+  margin: 1.2rem;
 }

@@ -27,6 +27,18 @@ function Domifier() {
     ? document.querySelector('#p2-name').value
     : undefined;
 
+  const dimOtherBoxes = (box1, box2, box3) => {
+    getBoxes().forEach((box) => {
+      if (
+        box.getAttribute('id') !== `box${box1}` &&
+        box.getAttribute('id') !== `box${box2}` &&
+        box.getAttribute('id') !== `box${box3}`
+      ) {
+        box.classList.add('dimmed');
+      }
+    });
+  };
+
   return {
     getBoxes,
     printBoxes,
@@ -34,6 +46,7 @@ function Domifier() {
     setPlayerText,
     p1name,
     p2name,
+    dimOtherBoxes,
   };
 }
 
@@ -86,8 +99,8 @@ function GameController(
   const domifier = Domifier();
 
   const players = [
-    { name: playerOneName, mark: 'X' },
-    { name: playerTwoName, mark: 'O' },
+    { name: playerOneName, mark: '╳', domMark: 'X' },
+    { name: playerTwoName, mark: '◯', domMark: 'O' },
   ];
 
   const printRound = () => {
@@ -101,12 +114,14 @@ function GameController(
   const changePlayer = () => {
     currentPlayer = currentPlayer === players[0] ? players[1] : players[0];
     domifier.setPlayerText(
-      `Current player: ${getCurrentPlayer().name} (${getCurrentPlayer().mark})`
+      `Current player: ${getCurrentPlayer().name} (${
+        getCurrentPlayer().domMark
+      })`
     );
   };
 
   domifier.setPlayerText(
-    `Current player: ${getCurrentPlayer().name} (${getCurrentPlayer().mark})`
+    `Current player: ${getCurrentPlayer().name} (${getCurrentPlayer().domMark})`
   );
 
   domifier.setGameText(`Choose your box!`);
@@ -148,6 +163,7 @@ function GameController(
       changePlayer();
       domifier.setPlayerText(`GAME OVER!`);
       domifier.setGameText(`${currentPlayer.name} is the WINNER!`);
+      domifier.dimOtherBoxes(0, 1, 2);
       return;
     }
     if (
@@ -160,6 +176,7 @@ function GameController(
       changePlayer();
       domifier.setPlayerText(`GAME OVER!`);
       domifier.setGameText(`${currentPlayer.name} is the WINNER!`);
+      domifier.dimOtherBoxes(3, 4, 5);
       return;
     }
     if (
@@ -172,6 +189,7 @@ function GameController(
       changePlayer();
       domifier.setPlayerText(`GAME OVER!`);
       domifier.setGameText(`${currentPlayer.name} is the WINNER!`);
+      domifier.dimOtherBoxes(6, 7, 8);
       return;
     }
     if (
@@ -184,6 +202,7 @@ function GameController(
       changePlayer();
       domifier.setPlayerText(`GAME OVER!`);
       domifier.setGameText(`${currentPlayer.name} is the WINNER!`);
+      domifier.dimOtherBoxes(0, 3, 6);
       return;
     }
     if (
@@ -196,6 +215,7 @@ function GameController(
       changePlayer();
       domifier.setPlayerText(`GAME OVER!`);
       domifier.setGameText(`${currentPlayer.name} is the WINNER!`);
+      domifier.dimOtherBoxes(1, 4, 7);
       return;
     }
     if (
@@ -208,6 +228,7 @@ function GameController(
       changePlayer();
       domifier.setPlayerText(`GAME OVER!`);
       domifier.setGameText(`${currentPlayer.name} is the WINNER!`);
+      domifier.dimOtherBoxes(2, 5, 8);
       return;
     }
     if (
@@ -220,6 +241,7 @@ function GameController(
       changePlayer();
       domifier.setPlayerText(`GAME OVER!`);
       domifier.setGameText(`${currentPlayer.name} is the WINNER!`);
+      domifier.dimOtherBoxes(0, 4, 8);
       return;
     }
     if (
@@ -232,6 +254,7 @@ function GameController(
       changePlayer();
       domifier.setPlayerText(`GAME OVER!`);
       domifier.setGameText(`${currentPlayer.name} is the WINNER!`);
+      domifier.dimOtherBoxes(2, 4, 6);
       return;
     }
     if (
@@ -244,6 +267,7 @@ function GameController(
       changePlayer();
       domifier.setPlayerText(`GAME OVER!`);
       domifier.setGameText(`${currentPlayer.name} is the WINNER!`);
+      domifier.dimOtherBoxes(0, 4, 8);
       return;
     }
     if (checkDraw()) {
