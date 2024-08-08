@@ -1,4 +1,5 @@
 // function i77yujt8r7juygvugktmuhk7ujhlk,iyjhokihjokiuuo8lo0o89[8=[[=[0-p=-09]]]]
+let game;
 
 function Domifier() {
   const getBoxes = () => document.querySelectorAll('.box');
@@ -13,19 +14,15 @@ function Domifier() {
   const gameText = document.querySelector('#game-text');
   const gameBoardDiv = document.querySelector('.game-board');
   const startDiv = document.querySelector('.start');
+  const postGame = document.querySelector('.post-game');
+  const playAgainBtn = document.querySelector('#play-again');
+  const changeNameBtn = document.querySelector('#change-name');
 
   startDiv.classList.add('hidden');
   gameBoardDiv.classList.remove('hidden');
 
   const setPlayerText = (text) => (playerText.textContent = text);
   const setGameText = (text) => (gameText.textContent = text);
-
-  const p1name = document.querySelector('#p1-name').value
-    ? document.querySelector('#p1-name').value
-    : undefined;
-  const p2name = document.querySelector('#p2-name').value
-    ? document.querySelector('#p2-name').value
-    : undefined;
 
   const dimOtherBoxes = (box1, box2, box3) => {
     getBoxes().forEach((box) => {
@@ -39,14 +36,44 @@ function Domifier() {
     });
   };
 
+  const deactivateGame = () => {
+    getBoxes().forEach((box) => {
+      box.removeEventListener('click', game.findIndex);
+    });
+  };
+
+  const hidePostGame = () => {
+    postGame.classList.add('hidden');
+  };
+
+  const showPostGame = () => {
+    postGame.classList.remove('hidden');
+  };
+
+  const resetDom = () => {
+    getBoxes().forEach((box) => {
+      box.classList.remove('dimmed');
+    });
+  };
+
+  playAgainBtn.addEventListener('click', () => {
+    game.goAgain();
+  });
+
+  changeNameBtn.addEventListener('click', () => {
+    location.reload();
+  });
+
   return {
     getBoxes,
     printBoxes,
     setGameText,
     setPlayerText,
-    p1name,
-    p2name,
     dimOtherBoxes,
+    resetDom,
+    deactivateGame,
+    hidePostGame,
+    showPostGame,
   };
 }
 
@@ -63,6 +90,12 @@ function GameBoard() {
 
   const getBoard = () => board.map((box) => box.getValue());
 
+  const resetBoard = () => {
+    board.forEach((box) => {
+      box.resetValue();
+    });
+  };
+
   const printBoard = () => {
     console.log(`${getBoard()[0]} ${getBoard()[1]} ${getBoard()[2]}`);
     console.log(`${getBoard()[3]} ${getBoard()[4]} ${getBoard()[5]}`);
@@ -73,6 +106,7 @@ function GameBoard() {
     getBoard,
     printBoard,
     placeMark,
+    resetBoard,
   };
 }
 
@@ -85,9 +119,14 @@ function Box() {
 
   const getValue = () => value;
 
+  const resetValue = () => {
+    value = ' ';
+  };
+
   return {
     addMark,
     getValue,
+    resetValue,
   };
 }
 
@@ -164,6 +203,8 @@ function GameController(
       domifier.setPlayerText(`GAME OVER!`);
       domifier.setGameText(`${currentPlayer.name} is the WINNER!`);
       domifier.dimOtherBoxes(0, 1, 2);
+      domifier.deactivateGame();
+      domifier.showPostGame();
       return;
     }
     if (
@@ -177,6 +218,8 @@ function GameController(
       domifier.setPlayerText(`GAME OVER!`);
       domifier.setGameText(`${currentPlayer.name} is the WINNER!`);
       domifier.dimOtherBoxes(3, 4, 5);
+      domifier.deactivateGame();
+      domifier.showPostGame();
       return;
     }
     if (
@@ -190,6 +233,8 @@ function GameController(
       domifier.setPlayerText(`GAME OVER!`);
       domifier.setGameText(`${currentPlayer.name} is the WINNER!`);
       domifier.dimOtherBoxes(6, 7, 8);
+      domifier.deactivateGame();
+      domifier.showPostGame();
       return;
     }
     if (
@@ -203,6 +248,8 @@ function GameController(
       domifier.setPlayerText(`GAME OVER!`);
       domifier.setGameText(`${currentPlayer.name} is the WINNER!`);
       domifier.dimOtherBoxes(0, 3, 6);
+      domifier.deactivateGame();
+      domifier.showPostGame();
       return;
     }
     if (
@@ -216,6 +263,8 @@ function GameController(
       domifier.setPlayerText(`GAME OVER!`);
       domifier.setGameText(`${currentPlayer.name} is the WINNER!`);
       domifier.dimOtherBoxes(1, 4, 7);
+      domifier.deactivateGame();
+      domifier.showPostGame();
       return;
     }
     if (
@@ -229,6 +278,8 @@ function GameController(
       domifier.setPlayerText(`GAME OVER!`);
       domifier.setGameText(`${currentPlayer.name} is the WINNER!`);
       domifier.dimOtherBoxes(2, 5, 8);
+      domifier.deactivateGame();
+      domifier.showPostGame();
       return;
     }
     if (
@@ -242,6 +293,8 @@ function GameController(
       domifier.setPlayerText(`GAME OVER!`);
       domifier.setGameText(`${currentPlayer.name} is the WINNER!`);
       domifier.dimOtherBoxes(0, 4, 8);
+      domifier.deactivateGame();
+      domifier.showPostGame();
       return;
     }
     if (
@@ -255,6 +308,8 @@ function GameController(
       domifier.setPlayerText(`GAME OVER!`);
       domifier.setGameText(`${currentPlayer.name} is the WINNER!`);
       domifier.dimOtherBoxes(2, 4, 6);
+      domifier.deactivateGame();
+      domifier.showPostGame();
       return;
     }
     if (
@@ -268,31 +323,64 @@ function GameController(
       domifier.setPlayerText(`GAME OVER!`);
       domifier.setGameText(`${currentPlayer.name} is the WINNER!`);
       domifier.dimOtherBoxes(0, 4, 8);
+      domifier.deactivateGame();
+      domifier.showPostGame();
       return;
     }
     if (checkDraw()) {
       domifier.setPlayerText(`GAME OVER!`);
       domifier.setGameText(`DRAW!!!`);
+      domifier.deactivateGame();
+      domifier.showPostGame();
     }
   };
 
-  domifier.getBoxes().forEach((box) => {
-    box.addEventListener('click', function (e) {
-      const target = e.target;
-      const parent = target.parentNode;
-      const index = [].indexOf.call(parent.children, target);
+  const findIndex = (e) => {
+    const target = e.target;
+    const parent = target.parentNode;
+    const index = [].indexOf.call(parent.children, target);
 
-      playRound(index);
-    });
+    playRound(index);
+  };
+
+  domifier.getBoxes().forEach((box) => {
+    box.addEventListener('click', findIndex);
   });
+
+  const resetBoard = () => {
+    domifier.getBoxes().forEach((box) => {
+      box.addEventListener('click', findIndex);
+    });
+    fullGameBoard.resetBoard();
+    domifier.setPlayerText(
+      `Current player: ${getCurrentPlayer().name} (${
+        getCurrentPlayer().domMark
+      })`
+    );
+    domifier.hidePostGame();
+    domifier.setGameText(`Choose your box!`);
+    console.log('resetting board...');
+  };
+
+  const goAgain = () => {
+    changePlayer();
+    resetBoard();
+    fullGameBoard.getBoard();
+    domifier.printBoxes(fullGameBoard.getBoard());
+    domifier.resetDom();
+  };
 
   return {
     getCurrentPlayer,
     printRound,
     playRound,
+    goAgain,
+    findIndex,
   };
 }
 
 document.querySelector('#start-btn').addEventListener('click', () => {
-  const game = GameController(Domifier().p1name, Domifier().p2name);
+  const p1name = document.querySelector('#p1-name').value || undefined;
+  const p2name = document.querySelector('#p2-name').value || undefined;
+  game = GameController(p1name, p2name);
 });
