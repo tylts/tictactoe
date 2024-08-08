@@ -96,15 +96,8 @@ function GameBoard() {
     });
   };
 
-  const printBoard = () => {
-    console.log(`${getBoard()[0]} ${getBoard()[1]} ${getBoard()[2]}`);
-    console.log(`${getBoard()[3]} ${getBoard()[4]} ${getBoard()[5]}`);
-    console.log(`${getBoard()[6]} ${getBoard()[7]} ${getBoard()[8]}`);
-  };
-
   return {
     getBoard,
-    printBoard,
     placeMark,
     resetBoard,
   };
@@ -141,10 +134,6 @@ function GameController(
     { name: playerOneName, mark: '╳', domMark: 'X' },
     { name: playerTwoName, mark: '◯', domMark: 'O' },
   ];
-
-  const printRound = () => {
-    fullGameBoard.printBoard();
-  };
 
   let currentPlayer = players[0];
 
@@ -372,7 +361,6 @@ function GameController(
 
   return {
     getCurrentPlayer,
-    printRound,
     playRound,
     goAgain,
     findIndex,
