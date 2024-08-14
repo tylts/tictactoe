@@ -1,7 +1,7 @@
 // function i77yujt8r7juygvugktmuhk7ujhlk,iyjhokihjokiuuo8lo0o89[8=[[=[0-p=-09]]]]
 let game;
 
-function Domifier() {
+const Domifier = (() => {
   const getBoxes = () => document.querySelectorAll('.box');
 
   const printBoxes = (gameBoard) => {
@@ -18,8 +18,10 @@ function Domifier() {
   const playAgainBtn = document.querySelector('#play-again');
   const changeNameBtn = document.querySelector('#change-name');
 
-  startDiv.classList.add('hidden');
-  gameBoardDiv.classList.remove('hidden');
+  const hideStartBox = () => {
+    startDiv.classList.add('hidden');
+    gameBoardDiv.classList.remove('hidden');
+  };
 
   const setPlayerText = (text) => (playerText.textContent = text);
   const setGameText = (text) => (gameText.textContent = text);
@@ -74,10 +76,11 @@ function Domifier() {
     deactivateGame,
     hidePostGame,
     showPostGame,
+    hideStartBox,
   };
-}
+})();
 
-function GameBoard() {
+const GameBoard = (() => {
   const board = [];
 
   for (let i = 0; i < 9; i++) {
@@ -101,7 +104,7 @@ function GameBoard() {
     placeMark,
     resetBoard,
   };
-}
+})();
 
 function Box() {
   let value = ' ';
@@ -127,8 +130,8 @@ function GameController(
   playerOneName = 'Player 1',
   playerTwoName = 'Player 2'
 ) {
-  const fullGameBoard = GameBoard();
-  const domifier = Domifier();
+  const fullGameBoard = GameBoard; // this is a lazy fix, I pinky promise I'll change it later!
+  const domifier = Domifier; // lol same here SEND IT
 
   const players = [
     { name: playerOneName, mark: '╳', domMark: 'X' },
@@ -371,4 +374,5 @@ document.querySelector('#start-btn').addEventListener('click', () => {
   const p1name = document.querySelector('#p1-name').value || undefined;
   const p2name = document.querySelector('#p2-name').value || undefined;
   game = GameController(p1name, p2name);
+  Domifier.hideStartBox();
 });
