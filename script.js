@@ -1,135 +1,10 @@
 // function i77yujt8r7juygvugktmuhk7ujhlk,iyjhokihjokiuuo8lo0o89[8=[[=[0-p=-09]]]]
 let game;
 
-const Domifier = (() => {
-  const getBoxes = () => document.querySelectorAll('.box');
-
-  const printBoxes = (gameBoard) => {
-    for (let i = 0; i < getBoxes().length; i++) {
-      getBoxes()[i].textContent = gameBoard[i];
-    }
-  };
-
-  const playerText = document.querySelector('#current-player');
-  const gameText = document.querySelector('#game-text');
-  const gameBoardDiv = document.querySelector('.game-board');
-  const startDiv = document.querySelector('.start');
-  const postGame = document.querySelector('.post-game');
-  const playAgainBtn = document.querySelector('#play-again');
-  const changeNameBtn = document.querySelector('#change-name');
-
-  const hideStartBox = () => {
-    startDiv.classList.add('hidden');
-    gameBoardDiv.classList.remove('hidden');
-  };
-
-  const setPlayerText = (text) => (playerText.textContent = text);
-  const setGameText = (text) => (gameText.textContent = text);
-
-  const dimOtherBoxes = (box1, box2, box3) => {
-    getBoxes().forEach((box) => {
-      if (
-        box.getAttribute('id') !== `box${box1}` &&
-        box.getAttribute('id') !== `box${box2}` &&
-        box.getAttribute('id') !== `box${box3}`
-      ) {
-        box.classList.add('dimmed');
-      }
-    });
-  };
-
-  const deactivateGame = () => {
-    getBoxes().forEach((box) => {
-      box.removeEventListener('click', game.findIndex);
-    });
-  };
-
-  const hidePostGame = () => {
-    postGame.classList.add('hidden');
-  };
-
-  const showPostGame = () => {
-    postGame.classList.remove('hidden');
-  };
-
-  const resetDom = () => {
-    getBoxes().forEach((box) => {
-      box.classList.remove('dimmed');
-    });
-  };
-
-  playAgainBtn.addEventListener('click', () => {
-    game.goAgain();
-  });
-
-  changeNameBtn.addEventListener('click', () => {
-    location.reload();
-  });
-
-  return {
-    getBoxes,
-    printBoxes,
-    setGameText,
-    setPlayerText,
-    dimOtherBoxes,
-    resetDom,
-    deactivateGame,
-    hidePostGame,
-    showPostGame,
-    hideStartBox,
-  };
-})();
-
-const GameBoard = (() => {
-  const board = [];
-
-  for (let i = 0; i < 9; i++) {
-    board.push(Box());
-  }
-
-  const placeMark = (box, player) => {
-    board[box].addMark(player);
-  };
-
-  const getBoard = () => board.map((box) => box.getValue());
-
-  const resetBoard = () => {
-    board.forEach((box) => {
-      box.resetValue();
-    });
-  };
-
-  function Box() {
-    let value = ' ';
-
-    const addMark = (mark) => {
-      value = mark;
-    };
-
-    const getValue = () => value;
-
-    const resetValue = () => {
-      value = ' ';
-    };
-
-    return {
-      addMark,
-      getValue,
-      resetValue,
-    };
-  }
-
-  return {
-    getBoard,
-    placeMark,
-    resetBoard,
-  };
-})();
-
-function GameController(
+const GameController = (
   playerOneName = 'Player 1',
   playerTwoName = 'Player 2'
-) {
+) => {
   const fullGameBoard = GameBoard; // this is a lazy fix, I pinky promise I'll change it later!
   const domifier = Domifier; // lol same here SEND IT
 
@@ -142,6 +17,12 @@ function GameController(
 
   const getCurrentPlayer = () => currentPlayer;
 
+  domifier.setPlayerText(
+    `Current player: ${getCurrentPlayer().name} (${getCurrentPlayer().domMark})`
+  );
+
+  domifier.setGameText(`Choose your box!`);
+
   const changePlayer = () => {
     currentPlayer = currentPlayer === players[0] ? players[1] : players[0];
     domifier.setPlayerText(
@@ -151,12 +32,6 @@ function GameController(
     );
   };
 
-  domifier.setPlayerText(
-    `Current player: ${getCurrentPlayer().name} (${getCurrentPlayer().domMark})`
-  );
-
-  domifier.setGameText(`Choose your box!`);
-
   const playRound = (box) => {
     if (fullGameBoard.getBoard()[box] === ' ') {
       fullGameBoard.placeMark(box, getCurrentPlayer().mark);
@@ -165,7 +40,6 @@ function GameController(
       checkWinner();
     } else {
       console.log('Choose a different box!');
-      printRound();
     }
   };
 
@@ -368,11 +242,149 @@ function GameController(
     goAgain,
     findIndex,
   };
-}
+};
+
+const Domifier = (() => {
+  const getBoxes = () => document.querySelectorAll('.box');
+
+  const printBoxes = (gameBoard) => {
+    for (let i = 0; i < getBoxes().length; i++) {
+      getBoxes()[i].textContent = gameBoard[i];
+    }
+  };
+
+  const playerText = document.querySelector('#current-player');
+  const gameText = document.querySelector('#game-text');
+  const gameBoardDiv = document.querySelector('.game-board');
+  const startDiv = document.querySelector('.start');
+  const postGame = document.querySelector('.post-game');
+  const playAgainBtn = document.querySelector('#play-again');
+  const changeNameBtn = document.querySelector('#change-name');
+
+  const hideStartBox = () => {
+    startDiv.classList.add('hidden');
+    gameBoardDiv.classList.remove('hidden');
+  };
+
+  const getP1name = () =>
+    document.querySelector('#p1-name').value || 'Player 1';
+  const getP2name = () =>
+    document.querySelector('#p2-name').value || 'Player 2';
+
+  const setPlayerText = (text) => (playerText.textContent = text);
+  const setGameText = (text) => (gameText.textContent = text);
+
+  const dimOtherBoxes = (box1, box2, box3) => {
+    getBoxes().forEach((box) => {
+      if (
+        box.getAttribute('id') !== `box${box1}` &&
+        box.getAttribute('id') !== `box${box2}` &&
+        box.getAttribute('id') !== `box${box3}`
+      ) {
+        box.classList.add('dimmed');
+      }
+    });
+  };
+
+  const deactivateGame = () => {
+    getBoxes().forEach((box) => {
+      box.removeEventListener('click', game.findIndex);
+    });
+  };
+
+  const hidePostGame = () => {
+    postGame.classList.add('hidden');
+  };
+
+  const showPostGame = () => {
+    postGame.classList.remove('hidden');
+  };
+
+  const resetDom = () => {
+    getBoxes().forEach((box) => {
+      box.classList.remove('dimmed');
+    });
+  };
+
+  playAgainBtn.addEventListener('click', () => {
+    game.goAgain();
+  });
+
+  changeNameBtn.addEventListener('click', () => {
+    location.reload();
+  });
+
+  const init = () => {
+    setPlayerText('Enter your names,');
+    setGameText('or just press start to play!');
+  };
+
+  return {
+    getBoxes,
+    printBoxes,
+    setGameText,
+    setPlayerText,
+    getP1name,
+    getP2name,
+    dimOtherBoxes,
+    resetDom,
+    deactivateGame,
+    hidePostGame,
+    showPostGame,
+    hideStartBox,
+    init,
+  };
+})();
+
+const GameBoard = (() => {
+  const board = [];
+
+  for (let i = 0; i < 9; i++) {
+    board.push(Box());
+  }
+
+  const placeMark = (box, player) => {
+    board[box].addMark(player);
+  };
+
+  const getBoard = () => board.map((box) => box.getValue());
+
+  const resetBoard = () => {
+    board.forEach((box) => {
+      box.resetValue();
+    });
+  };
+
+  function Box() {
+    let value = ' ';
+
+    const addMark = (mark) => {
+      value = mark;
+    };
+
+    const getValue = () => value;
+
+    const resetValue = () => {
+      value = ' ';
+    };
+
+    return {
+      addMark,
+      getValue,
+      resetValue,
+    };
+  }
+
+  return {
+    getBoard,
+    placeMark,
+    resetBoard,
+  };
+})();
+
+Domifier.init();
 
 document.querySelector('#start-btn').addEventListener('click', () => {
-  const p1name = document.querySelector('#p1-name').value || undefined;
-  const p2name = document.querySelector('#p2-name').value || undefined;
-  game = GameController(p1name, p2name);
+  game = GameController(Domifier.getP1name(), Domifier.getP2name());
   Domifier.hideStartBox();
 });
