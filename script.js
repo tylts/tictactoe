@@ -99,32 +99,32 @@ const GameBoard = (() => {
     });
   };
 
+  function Box() {
+    let value = ' ';
+
+    const addMark = (mark) => {
+      value = mark;
+    };
+
+    const getValue = () => value;
+
+    const resetValue = () => {
+      value = ' ';
+    };
+
+    return {
+      addMark,
+      getValue,
+      resetValue,
+    };
+  }
+
   return {
     getBoard,
     placeMark,
     resetBoard,
   };
 })();
-
-function Box() {
-  let value = ' ';
-
-  const addMark = (mark) => {
-    value = mark;
-  };
-
-  const getValue = () => value;
-
-  const resetValue = () => {
-    value = ' ';
-  };
-
-  return {
-    addMark,
-    getValue,
-    resetValue,
-  };
-}
 
 function GameController(
   playerOneName = 'Player 1',
